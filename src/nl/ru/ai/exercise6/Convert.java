@@ -1,5 +1,7 @@
 package nl.ru.ai.exercise6;
 
+import java.util.Stack;
+
 public class Convert
 {
 
@@ -56,7 +58,17 @@ public class Convert
   
   private static void reverse(String s)
   {
-	  
+	  Stack<String> stack = new Stack<String>();
+	  while(s.length()!=0)
+	  {
+		  stack.push(s);
+		  s=s.substring(1);
+	  }
+	  while(!stack.isEmpty())
+	  {
+		  s=stack.pop();
+		  System.out.print(s.charAt(0));
+	  }
   }
   
   private static void downUpOriginal(int i)
