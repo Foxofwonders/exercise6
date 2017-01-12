@@ -35,13 +35,12 @@ public class Convert
   
   private static void xsy(int i)
   {
-    if(i==0)
-      System.out.print("y");
-    else
+    while(i!=0)
     {
-      System.out.print("x");
-      xsy(i-1);
+    	System.out.print("x");
+    	i=i-1;
     }
+    System.out.print("y");
   }
   
   private static void reverseOriginal(String s)
@@ -57,13 +56,7 @@ public class Convert
   
   private static void reverse(String s)
   {
-    if(s.length()==0)
-      return;
-    else
-    {
-      reverse(s.substring(1));
-      System.out.print(s.charAt(0));
-    }
+	  
   }
   
   private static void downUpOriginal(int i)
@@ -80,14 +73,7 @@ public class Convert
   
   private static void downUp(int i)
   {
-    if(i==0)
-      System.out.print("!");
-    else
-    {
-      System.out.print(i);
-      downUp(i-1);
-      System.out.print(i);
-    }
+	  
   }
 
 }
