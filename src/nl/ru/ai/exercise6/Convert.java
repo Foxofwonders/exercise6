@@ -24,19 +24,29 @@ public class Convert
     System.out.println();
   }
 
+  /** Prints a number of 'x's equal to the input integer, then prints a y.
+   * @param i
+   */
   private static void xsyOriginal(int i)
   {
+	  assert i>0: "Integer must be greater than zero.";
+	  
     if(i==0)
       System.out.print("y");
     else
     {
       System.out.print("x");
-      xsy(i-1);
+      xsyOriginal(i-1);
     }
   }
   
-  private static void xsy(int i)
+  /** Prints a number of 'x's equal to the input integer, then prints a y.
+ * @param i
+ */
+private static void xsy(int i)
   {
+	assert i>0: "Integer must be greater than zero.";
+	
     while(i!=0)
     {
     	System.out.print("x");
@@ -45,19 +55,29 @@ public class Convert
     System.out.print("y");
   }
   
+  /** Prints the reverse of the input string.
+   * @param s
+   */
   private static void reverseOriginal(String s)
   {
+	  assert s!=null:"String must be declared.";
+	  
     if(s.length()==0)
       return;
     else
     {
-      reverse(s.substring(1));
+    	reverseOriginal(s.substring(1));
       System.out.print(s.charAt(0));
     }
   }
   
-  private static void reverse(String s)
+  /** Prints the reverse of the input string.
+ * @param s
+ */
+private static void reverse(String s)
   {
+	assert s!=null:"String must be declared.";
+	
 	  Stack<String> stack = new Stack<String>();
 	  while(s.length()!=0)
 	  {
@@ -71,20 +91,32 @@ public class Convert
 	  }
   }
   
+  /** Prints an integer and all positive integers before it (no zero), prints an exclamation mark, and then prints all integers
+   * from 1 up to and including the input integer (i). 
+ * @param i
+ */
   private static void downUpOriginal(int i)
   {
+	  assert i>0: "Integer must be greater than zero.";
+	  
     if(i==0)
       System.out.print("!");
     else
     {
       System.out.print(i);
-      downUp(i-1);
+      downUpOriginal(i-1);
       System.out.print(i);
     }
   }
   
-  private static void downUp(int i)
+  /** Prints an integer and all positive integers before it (no zero), prints an exclamation mark, and then prints all integers
+   * from 1 up to and including the input integer (i). 
+ * @param i
+ */
+private static void downUp(int i)
   {
+	assert i>0: "Integer must be greater than zero.";
+	
 	  Stack<Integer> stack=new Stack<Integer>();
 	  while(i!=0)
 	  {
