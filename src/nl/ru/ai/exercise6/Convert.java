@@ -85,7 +85,19 @@ public class Convert
   
   private static void downUp(int i)
   {
-	  
+	  Stack<Integer> stack=new Stack<Integer>();
+	  while(i!=0)
+	  {
+		  System.out.print(i);
+		  stack.push(i);
+		  i=i-1;
+	  }
+	  System.out.print("!");
+	  while(!stack.isEmpty())
+	  {
+		  i=stack.pop();
+		  System.out.print(i);
+	  }
   }
 
 }
