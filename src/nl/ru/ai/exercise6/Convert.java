@@ -22,6 +22,17 @@ public class Convert
     System.out.println();
   }
 
+  private static void xsyOriginal(int i)
+  {
+    if(i==0)
+      System.out.print("y");
+    else
+    {
+      System.out.print("x");
+      xsy(i-1);
+    }
+  }
+  
   private static void xsy(int i)
   {
     if(i==0)
@@ -33,6 +44,17 @@ public class Convert
     }
   }
   
+  private static void reverseOriginal(String s)
+  {
+    if(s.length()==0)
+      return;
+    else
+    {
+      reverse(s.substring(1));
+      System.out.print(s.charAt(0));
+    }
+  }
+  
   private static void reverse(String s)
   {
     if(s.length()==0)
@@ -41,6 +63,18 @@ public class Convert
     {
       reverse(s.substring(1));
       System.out.print(s.charAt(0));
+    }
+  }
+  
+  private static void downUpOriginal(int i)
+  {
+    if(i==0)
+      System.out.print("!");
+    else
+    {
+      System.out.print(i);
+      downUp(i-1);
+      System.out.print(i);
     }
   }
   
