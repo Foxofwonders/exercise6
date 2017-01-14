@@ -13,13 +13,7 @@ public class TrainPlanner
 		int[] [] table = new int [noStations] [noStations];
 		initTable(table);
 		int[] [] via = new int [noStations] [noStations];
-		for(int i = 0;i<noStations;i++)
-		{
-			for(int j = 0;j<noStations;j++)
-			{
-				via[i][j]=-1;
-			}
-		}
+		initVia(via);
 		table = addDistances(table,stations);
 		table = floydWarshall (table, via);
 //		printTable(table);
@@ -27,6 +21,17 @@ public class TrainPlanner
 
 	}
 	
+	private static void initVia(int[][] via) 
+	{
+		for(int i = 0;i<via.length;i++)
+		{
+			for(int j = 0;j<via[0].length;j++)
+			{
+				via[i][j]=-1;
+			}
+		}
+	}
+
 	private static void initTable(int[][] table) 
 	{
 		for(int i=0; i<table.length; i++)
