@@ -11,6 +11,7 @@ public class TrainPlanner
 		String[] stations = readStations();
 		int noStations = stations.length;
 		int[] [] table = new int [noStations] [noStations];
+		initTable(table);
 		int[] [] via = new int [noStations] [noStations];
 		for(int i = 0;i<noStations;i++)
 		{
@@ -26,6 +27,20 @@ public class TrainPlanner
 
 	}
 	
+	private static void initTable(int[][] table) 
+	{
+		for(int i=0; i<table.length; i++)
+		{
+			for(int j=0; j<table[0].length; j++)
+			{
+				if(i==j)
+					table[i][j]=0;
+				else
+					table[i][j]=999;
+			}
+		}
+	}
+
 	static String[] readStations()
 	{
 		String line;
