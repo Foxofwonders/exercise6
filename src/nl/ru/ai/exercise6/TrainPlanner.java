@@ -21,7 +21,7 @@ public class TrainPlanner
 		}
 		table = addDistances(table,stations);
 		table = floydWarshall (table, via);
-		//printTable(table);
+//		printTable(table);
 		
 
 	}
@@ -130,9 +130,9 @@ public class TrainPlanner
 	
 	static void printTable(int[][] table)
     {
-        for (int i=0; i<noStations; ++i)
+        for (int i=0; i<table.length; ++i)
         {
-            for (int j=0; j<noStations; ++j)
+            for (int j=0; j<table[0].length; ++j)
             {
                 if (table[i][j]==0)
                    System.out.print(" - ");
