@@ -6,17 +6,15 @@ import java.io.IOException;
 
 public class TrainPlanner 
 {
-	static int INF =345;
-
 	public static void main(String[] args) 
 	{
 		String[] stations = readStations();
-		System.out.println(stations.length);
-		int[] [] table = new int [INF] [INF];
-		int[] [] via = new int [INF] [INF];
-		for(int i = 0;i<INF;i++)
+		int noStations = stations.length;
+		int[] [] table = new int [noStations] [noStations];
+		int[] [] via = new int [noStations] [noStations];
+		for(int i = 0;i<noStations;i++)
 		{
-			for(int j = 0;j<INF;j++)
+			for(int j = 0;j<noStations;j++)
 			{
 				via[i][j]=-1;
 			}
@@ -132,9 +130,9 @@ public class TrainPlanner
 	
 	static void printTable(int[][] table)
     {
-        for (int i=0; i<INF; ++i)
+        for (int i=0; i<noStations; ++i)
         {
-            for (int j=0; j<INF; ++j)
+            for (int j=0; j<noStations; ++j)
             {
                 if (table[i][j]==0)
                    System.out.print(" - ");
