@@ -64,16 +64,6 @@ public class TrainPlanner
 	
 	static int[][] addDistances(int[][] table, String[] stations)
 	{
-		for(int i =0;i<table.length;i++)
-		{
-			for(int j =0;j<table.length;j++)
-			{
-				if(j==i)
-					table[i][i]=0;
-				else
-					table[i][j]=999;
-			}
-		}
 		try 
 		{
 			BufferedReader reader = new BufferedReader(new FileReader("connections.txt"));
