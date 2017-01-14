@@ -23,7 +23,7 @@ public class TrainPlanner
 		}
 		table = addDistances(table,stations);
 		table = floydWarshall (table, via);
-		//printTable(table);
+		drawTable(table,stations);
 		
 
 	}
@@ -108,14 +108,12 @@ public class TrainPlanner
 						int alternative = table[a][k] + table[k][b];
 						if (alternative < table[a][b] && alternative > 0)
 						{
-							System.out.println(alternative);
 							table[a][b] = alternative;
 							via[a][b] = k;
 						}
 					}
 			}
 		}
-		printTable(table);
 		return table;
 	}
 	
@@ -130,18 +128,41 @@ public class TrainPlanner
 		}
 	}
 	
-	static void printTable(int[][] table)
-    {
-        for (int i=0; i<INF; ++i)
-        {
-            for (int j=0; j<INF; ++j)
-            {
-                if (table[i][j]==0)
-                   System.out.print(" - ");
-                else
-                    System.out.print(table[i][j]+"   ");
-            }
-            System.out.println();
-        }
-    }
+	private static void drawTable(int[][] table, String[] stations)
+	  {
+	    assert table!=null : "Uninitialized table";
+	    assert stations!=null : "Uninitialized stations array";
+
+	    int N = table.length;
+
+	    // Every 'cell' of the table is 5 characters long: at most the station names are 4 characters long, plus one space added.
+
+	    // print the first line, which is a line with all the to-station names
+	    System.out.print("     ");
+	    for(int i=0;i<N;i++)
+	    {
+	      System.out.printf("%s ",stations[i]);
+	      for(int j=4-stations[i].length();j>0;j--)
+	        System.out.print(" ");
+	    }
+
+	    // print the rest of the table, spaced out properly by checking the length of the integers.
+	    for(int i=0;i<N;i++)
+	    {
+	      System.out.println("");
+	      for(int j=0;j<N;j++)
+	      {
+	        // add the from-station
+	        if(j==0)
+	        {
+	          System.out.printf("%s ",stations[i]);
+	          for(int k=4-stations[i].length();k>0;k--)
+	            System.out.print(" ");
+	        }
+	        System.out.printf("%d ",table[i][j]);
+	        for(int k=4-String.valueOf(table[i][j]).length();k>0;k--)
+	          System.out.print(" ");
+	      }
+	    }
+	  }
 }
