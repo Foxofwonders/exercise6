@@ -116,7 +116,7 @@ public class TrainPlanner
 						int alternative = table[a][k] + table[k][b];
 						if (alternative < table[a][b] && alternative > 0)
 						{
-							System.out.println(alternative);
+//							System.out.println(alternative);
 							table[a][b] = alternative;
 							via[a][b] = k;
 						}
@@ -144,10 +144,7 @@ public class TrainPlanner
         {
             for (int j=0; j<table[0].length; ++j)
             {
-                if (table[i][j]==0)
-                   System.out.print(" - ");
-                else
-                    System.out.print(table[i][j]+"   ");
+            	System.out.print(table[i][j] + "\t");
             }
             System.out.println();
         }
