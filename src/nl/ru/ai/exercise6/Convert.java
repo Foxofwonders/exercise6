@@ -66,6 +66,7 @@ private static void xsy(int i)
       return;
     else
     {
+    	
     	reverseOriginal(s.substring(1));
       System.out.print(s.charAt(0));
     }
@@ -83,6 +84,7 @@ private static void reverse(String s)
 	  {
 		  stack.push(s);
 		  s=s.substring(1);
+		  System.out.println(s);
 	  }
 	  while(!stack.isEmpty())
 	  {
