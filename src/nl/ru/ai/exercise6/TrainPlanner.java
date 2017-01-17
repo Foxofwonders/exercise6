@@ -26,8 +26,12 @@ public class TrainPlanner
 	
 	
 
+	/** Initiates the via table with only -1
+	 * @param via
+	 */
 	private static void initVia(int[][] via) 
 	{
+		assert via!=null:"via table must be initialised";
 		for(int i = 0;i<via.length;i++)
 		{
 			for(int j = 0;j<via[0].length;j++)
@@ -37,8 +41,12 @@ public class TrainPlanner
 		}
 	}
 
+	/** Initiates the distances table with 0 from station to itself, and 999 elsewhere
+	 * @param table
+	 */
 	private static void initTable(int[][] table) 
 	{
+		assert table!=null:"table must be initialised";
 		for(int i=0; i<table.length; i++)
 		{
 			for(int j=0; j<table[0].length; j++)
@@ -51,8 +59,12 @@ public class TrainPlanner
 		}
 	}
 
+	/** Reads the the stations from stations.txt
+	 * @return string[]stations
+	 */
 	static String[] readStations()
 	{
+		assert true;
 		String line;
 		String[] stations = null;
 		try 
@@ -72,8 +84,15 @@ public class TrainPlanner
 		return stations;
 	}
 	
+	/**
+	 * @param table where distances need to be added
+	 * @param stations
+	 * @return table filled with some distances as specified in connections.txt
+	 */
 	static int[][] addDistances(int[][] table, String[] stations)
 	{
+		assert table!=null:"table must be initialised";
+		assert stations!=null:"stations must be initialised";
 		try 
 		{
 			BufferedReader reader = new BufferedReader(new FileReader("connections.txt"));
@@ -96,8 +115,15 @@ public class TrainPlanner
 		return table;
 	}
 	
+	/** Finds the index of a station name in the stations array
+	 * @param name of the station to be found
+	 * @param stations
+	 * @return the index number of the station
+	 */
 	static int stationNumber(String name, String [] stations)
 	{
+		assert name!=null:"name must be specified";
+		assert stations!=null:"stations must be initialised";
 		int pos=0;
 		while(!stations[pos].equals(name))
 			pos++;
@@ -129,8 +155,17 @@ public class TrainPlanner
 		}
 	}
 	
+	/** shows the shortest path from station a to station b
+	 * @param via table
+	 * @param a from place (stationnumber)
+	 * @param b to place (stationnumber)
+	 * @param stations
+	 */
 	static void showPath (int [ ] [ ] via, int a, int b, String[]stations)
 	{
+		assert via!=null:"via must be initialised";
+		assert a>0 && b>0 &&a<stations.length && b<stations.length: "Not a valid train station";
+		assert stations!=null:"stations must be initialised";
 		if (via[a][b] == -1)
 			System.out.println(stations[a] + " " + stations[b]);
 		else
@@ -140,8 +175,12 @@ public class TrainPlanner
 		}
 	}
 	
+	/** Prints the given table on the screen
+	 * @param table
+	 */
 	static void printTable(int[][] table)
     {
+		assert table!=null:"table must be initialised";
         for (int i=0; i<table.length; ++i)
         {
             for (int j=0; j<table[0].length; ++j)
@@ -152,8 +191,15 @@ public class TrainPlanner
         }
     }
 	
+	/** finds the biggest distance in the distance table and prints it on the screen
+	 * @param table with distances
+	 * @param stations
+	 * @return
+	 */
 	private static int findBiggestDistance(int[][] table, String[]stations) 
 	{
+		assert table!=null:"table must be initialised";
+		assert stations!=null:"stations must be initialised";
 		int biggestDistance=0;
 		String stationFrom="";
 		String stationTo="";
@@ -173,8 +219,15 @@ public class TrainPlanner
 		return biggestDistance;
 	}
 	
+	/** Finds the name of the farthest station(1)
+	 * @param table
+	 * @param stations
+	 * @return
+	 */
 	private static String biggestDistanceFrom(int[][] table, String[]stations) 
 	{
+		assert table!=null:"table must be initialised";
+		assert stations!=null:"stations must be initialised";
 		int biggestDistance=0;
 		String stationFrom="";
 		String stationTo="";
@@ -192,8 +245,15 @@ public class TrainPlanner
         }
 		return stationFrom;
 	}
+	/** Finds the name of the farthest station (2)
+	 * @param table
+	 * @param stations
+	 * @return
+	 */
 	private static String biggestDistanceTo(int[][] table, String[]stations) 
 	{
+		assert table!=null:"table must be initialised";
+		assert stations!=null:"stations must be initialised";
 		int biggestDistance=0;
 		String stationFrom="";
 		String stationTo="";
