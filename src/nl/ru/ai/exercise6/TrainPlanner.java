@@ -16,11 +16,14 @@ public class TrainPlanner
 		initVia(via);
 		table = addDistances(table,stations);
 		table = floydWarshall (table, via);
+		findBiggestDistance(table, stations);
 //		printTable(table);
 		
 
 	}
 	
+	
+
 	private static void initVia(int[][] via) 
 	{
 		for(int i = 0;i<via.length;i++)
@@ -149,4 +152,24 @@ public class TrainPlanner
             System.out.println();
         }
     }
+	
+	private static void findBiggestDistance(int[][] table, String[]stations) 
+	{
+		int biggestDistance=0;
+		String stationFrom="";
+		String stationTo="";
+		for (int i=0; i<table.length; ++i)
+        {
+            for (int j=0; j<table[0].length; ++j)
+            {
+            	if(table[i][j]>biggestDistance)
+            	{
+            		biggestDistance=table[i][j];
+            		stationFrom=stations[i];
+            		stationTo=stations[j];
+            	}
+            }
+        }
+		System.out.println(biggestDistance+" from "+stationFrom+" to "+stationTo);
+	}
 }
