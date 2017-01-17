@@ -17,8 +17,10 @@ public class TrainPlanner
 		table = addDistances(table,stations);
 		floydWarshall (table, via);
 		findBiggestDistance(table, stations);
+		String stationFrom=biggestDistanceFrom(table,stations);
+		String stationTo=biggestDistanceTo(table,stations);
 //		printTable(table);
-		
+		showPath(via,stationNumber(stationFrom,stations),stationNumber(stationTo,stations),stations);
 
 	}
 	
@@ -127,14 +129,14 @@ public class TrainPlanner
 		}
 	}
 	
-	static void showPath (int [ ] [ ] via, int a, int b)
+	static void showPath (int [ ] [ ] via, int a, int b, String[]stations)
 	{
 		if (via[a][b] == -1)
-			System.out.println(a + " " + b);
+			System.out.println(stations[a] + " " + stations[b]);
 		else
 		{
-		showPath (via, a, via[a][b]);
-		showPath (via, via[a][b], b);
+		showPath (via, a, via[a][b],stations);
+		showPath (via, via[a][b], b, stations);
 		}
 	}
 	
@@ -150,7 +152,7 @@ public class TrainPlanner
         }
     }
 	
-	private static void findBiggestDistance(int[][] table, String[]stations) 
+	private static int findBiggestDistance(int[][] table, String[]stations) 
 	{
 		int biggestDistance=0;
 		String stationFrom="";
@@ -168,5 +170,45 @@ public class TrainPlanner
             }
         }
 		System.out.println("The biggest distance is "+biggestDistance+"km from "+stationFrom+" to "+stationTo);
+		return biggestDistance;
+	}
+	
+	private static String biggestDistanceFrom(int[][] table, String[]stations) 
+	{
+		int biggestDistance=0;
+		String stationFrom="";
+		String stationTo="";
+		for (int i=0; i<table.length; ++i)
+        {
+            for (int j=0; j<table[0].length; ++j)
+            {
+            	if(table[i][j]>biggestDistance)
+            	{
+            		biggestDistance=table[i][j];
+            		stationFrom=stations[i];
+            		stationTo=stations[j];
+            	}
+            }
+        }
+		return stationFrom;
+	}
+	private static String biggestDistanceTo(int[][] table, String[]stations) 
+	{
+		int biggestDistance=0;
+		String stationFrom="";
+		String stationTo="";
+		for (int i=0; i<table.length; ++i)
+        {
+            for (int j=0; j<table[0].length; ++j)
+            {
+            	if(table[i][j]>biggestDistance)
+            	{
+            		biggestDistance=table[i][j];
+            		stationFrom=stations[i];
+            		stationTo=stations[j];
+            	}
+            }
+        }
+		return stationTo;
 	}
 }
