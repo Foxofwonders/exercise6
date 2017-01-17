@@ -15,7 +15,7 @@ public class TrainPlanner
 		int[] [] via = new int [noStations] [noStations];
 		initVia(via);
 		table = addDistances(table,stations);
-		table = floydWarshall (table, via);
+		floydWarshall (table, via);
 		findBiggestDistance(table, stations);
 //		printTable(table);
 		
@@ -108,7 +108,7 @@ public class TrainPlanner
 	 * @param k
 	 * @return shortest distance
 	 */
-	static int[][] floydWarshall (int [ ] [ ] table, int [ ] [ ] via)
+	static void floydWarshall (int [ ] [ ] table, int [ ] [ ] via)
 	{ 
 		for (int k = 0 ; k < table.length ; k++)
 		{
@@ -119,15 +119,12 @@ public class TrainPlanner
 						int alternative = table[a][k] + table[k][b];
 						if (alternative < table[a][b] && alternative > 0)
 						{
-//							System.out.println(alternative);
 							table[a][b] = alternative;
 							via[a][b] = k;
 						}
 					}
 			}
 		}
-		printTable(table);
-		return table;
 	}
 	
 	static void showPath (int [ ] [ ] via, int a, int b)
@@ -170,6 +167,6 @@ public class TrainPlanner
             	}
             }
         }
-		System.out.println(biggestDistance+" from "+stationFrom+" to "+stationTo);
+		System.out.println("The biggest distance is "+biggestDistance+"km from "+stationFrom+" to "+stationTo);
 	}
 }
