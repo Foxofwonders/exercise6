@@ -1,5 +1,9 @@
-package nl.ru.ai.exercise6;
+/**
+ * @author Denise van Baalen (s4708237)
+ * @author Anna Gansen (s4753755)
+ */
 
+package nl.ru.ai.exercise6;
 import java.util.Stack;
 
 public class Convert

@@ -1,5 +1,9 @@
-package nl.ru.ai.exercise6;
+/**
+ * @author Denise van Baalen (s4708237)
+ * @author Anna Gansen (s4753755)
+ */
 
+package nl.ru.ai.exercise6;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
@@ -16,11 +20,11 @@ public class TrainPlanner
 		initVia(via);
 		table = addDistances(table,stations);
 		floydWarshall (table, via);
-		findBiggestDistance(table, stations);
-		String stationFrom=biggestDistanceFrom(table,stations);
-		String stationTo=biggestDistanceTo(table,stations);
+		int[] biggestDistance = findBiggestDistance(table);
 //		printTable(table);
-		showPath(via,stationNumber(stationFrom,stations),stationNumber(stationTo,stations),stations);
+		System.out.println("The bigges distance of " + biggestDistance[2] + "km is between: " + stations[biggestDistance[0]] + " and "
+				+ stations[biggestDistance[1]] + ".");
+		showPath(via,biggestDistance[0],biggestDistance[1],stations);
 
 	}
 	
@@ -129,6 +133,7 @@ public class TrainPlanner
 			pos++;
 		return pos;
 	}
+	
 	/**
 	 * result is the shortest distance of path from A to B where intermediate places can only be member of {0..k}
 	 * @param A
@@ -138,19 +143,21 @@ public class TrainPlanner
 	 */
 	static void floydWarshall (int [ ] [ ] table, int [ ] [ ] via)
 	{ 
+		assert via!=null:"via must be initialised";
+		assert table!=null:"table must be initialised";
 		for (int k = 0 ; k < table.length ; k++)
 		{
 			for (int a = 0 ; a < table.length ; a++)
 			{
-					for (int b = 0 ; b < table.length ; b++)
-					{ 
-						int alternative = table[a][k] + table[k][b];
-						if (alternative < table[a][b] && alternative > 0)
-						{
-							table[a][b] = alternative;
-							via[a][b] = k;
-						}
+				for (int b = 0 ; b < table.length ; b++)
+				{ 
+					int alternative = table[a][k] + table[k][b];
+					if (alternative < table[a][b] && alternative > 0)
+					{
+						table[a][b] = alternative;
+						via[a][b] = k;
 					}
+				}	
 			}
 		}
 	}
@@ -167,145 +174,32 @@ public class TrainPlanner
 		assert a>0 && b>0 &&a<stations.length && b<stations.length: "Not a valid train station";
 		assert stations!=null:"stations must be initialised";
 		if (via[a][b] == -1)
-			System.out.println(stations[a] + " " + stations[b]);
+			System.out.println(stations[a] + " -> " + stations[b]);
 		else
 		{
-		showPath (via, a, via[a][b],stations);
-		showPath (via, via[a][b], b, stations);
+			showPath (via, a, via[a][b],stations);
+			showPath (via, via[a][b], b, stations);
 		}
 	}
 	
-	private static void drawTable(int[][] table, String[] stations)
-	  {
-	    assert table!=null : "Uninitialized table";
-	    assert stations!=null : "Uninitialized stations array";
-
-	    int N = table.length;
-
-	    // Every 'cell' of the table is 5 characters long: at most the station names are 4 characters long, plus one space added.
-
-	    // print the first line, which is a line with all the to-station names
-	    System.out.print("     ");
-	    for(int i=0;i<N;i++)
-	    {
-	      System.out.printf("%s ",stations[i]);
-	      for(int j=4-stations[i].length();j>0;j--)
-	        System.out.print(" ");
-	    }
-
-	    // print the rest of the table, spaced out properly by checking the length of the integers.
-	    for(int i=0;i<N;i++)
-	    {
-	      System.out.println("");
-	      for(int j=0;j<N;j++)
-	      {
-	        // add the from-station
-	        if(j==0)
-	        {
-	          System.out.printf("%s ",stations[i]);
-	          for(int k=4-stations[i].length();k>0;k--)
-	            System.out.print(" ");
-	        }
-	        System.out.printf("%d ",table[i][j]);
-	        for(int k=4-String.valueOf(table[i][j]).length();k>0;k--)
-	          System.out.print(" ");
-	      }
-	    }
-	  }
-	/** Prints the given table on the screen
-	 * @param table
-	 */
-	static void printTable(int[][] table)
-    {
-		assert table!=null:"table must be initialised";
-        for (int i=0; i<table.length; ++i)
-        {
-            for (int j=0; j<table[0].length; ++j)
-            {
-            	System.out.print(table[i][j] + "\t");
-            }
-            System.out.println();
-        }
-    }
 	
-	/** finds the biggest distance in the distance table and prints it on the screen
+	/** finds the biggest distance with the two stations in the distance table
 	 * @param table with distances
-	 * @param stations
-	 * @return
+	 * @return array with biggest distance and the 2 station numbers
 	 */
-	private static int findBiggestDistance(int[][] table, String[]stations) 
+	private static int[] findBiggestDistance(int[][] table) 
 	{
 		assert table!=null:"table must be initialised";
-		assert stations!=null:"stations must be initialised";
-		int biggestDistance=0;
-		String stationFrom="";
-		String stationTo="";
-		for (int i=0; i<table.length; ++i)
-        {
-            for (int j=0; j<table[0].length; ++j)
-            {
-            	if(table[i][j]>biggestDistance)
-            	{
-            		biggestDistance=table[i][j];
-            		stationFrom=stations[i];
-            		stationTo=stations[j];
-            	}
-            }
-        }
-		System.out.println("The biggest distance is "+biggestDistance+"km from "+stationFrom+" to "+stationTo);
+		int[] biggestDistance = { 0, 0, 0 };
+		for (int r = 0; r < table.length; r++)
+			for (int c = 0; c < table[r].length; c++)
+				if (table[r][c] > biggestDistance[2]) 
+				{
+					biggestDistance[0] = r;
+					biggestDistance[1] = c;
+					biggestDistance[2] = table[r][c];
+				}
 		return biggestDistance;
-	}
-	
-	/** Finds the name of the farthest station(1)
-	 * @param table
-	 * @param stations
-	 * @return
-	 */
-	private static String biggestDistanceFrom(int[][] table, String[]stations) 
-	{
-		assert table!=null:"table must be initialised";
-		assert stations!=null:"stations must be initialised";
-		int biggestDistance=0;
-		String stationFrom="";
-		String stationTo="";
-		for (int i=0; i<table.length; ++i)
-        {
-            for (int j=0; j<table[0].length; ++j)
-            {
-            	if(table[i][j]>biggestDistance)
-            	{
-            		biggestDistance=table[i][j];
-            		stationFrom=stations[i];
-            		stationTo=stations[j];
-            	}
-            }
-        }
-		return stationFrom;
-	}
-	/** Finds the name of the farthest station (2)
-	 * @param table
-	 * @param stations
-	 * @return
-	 */
-	private static String biggestDistanceTo(int[][] table, String[]stations) 
-	{
-		assert table!=null:"table must be initialised";
-		assert stations!=null:"stations must be initialised";
-		int biggestDistance=0;
-		String stationFrom="";
-		String stationTo="";
-		for (int i=0; i<table.length; ++i)
-        {
-            for (int j=0; j<table[0].length; ++j)
-            {
-            	if(table[i][j]>biggestDistance)
-            	{
-            		biggestDistance=table[i][j];
-            		stationFrom=stations[i];
-            		stationTo=stations[j];
-            	}
-            }
-        }
-		return stationTo;
-	}
+		}
 }
+
